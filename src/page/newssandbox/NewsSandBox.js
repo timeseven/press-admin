@@ -1,14 +1,32 @@
-import React from "react";
-import { redirect } from "react-router-dom";
 import SideMenu from "../../components/newssandbox/SideMenu";
 import TopHeader from "../../components/newssandbox/TopHeader";
+import { Outlet, redirect } from "react-router-dom";
+import { Layout, theme } from "antd";
+import "./NewsSandBox.css";
+
+const { Content } = Layout;
 
 const NewsSandBox = () => {
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
   return (
-    <div>
+    <Layout>
       <SideMenu />
-      <TopHeader />
-    </div>
+      <Layout>
+        <TopHeader />
+        <Content
+          style={{
+            margin: "24px 16px",
+            padding: 24,
+            minHeight: 280,
+            background: colorBgContainer,
+          }}
+        >
+          <Outlet />
+        </Content>
+      </Layout>
+    </Layout>
   );
 };
 
