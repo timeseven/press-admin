@@ -1,3 +1,4 @@
+import "./App.css";
 import { RouterProvider } from "react-router-dom";
 import IndexRouter from "./router/IndexRouter";
 

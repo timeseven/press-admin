@@ -1,5 +1,5 @@
 import Login from "../page/login/Login";
-import NewsSandBox, { newsSandBoxLoader } from "../page/newssandbox/NewsSandBox";
+import NewsSandBox, { NewsSandBoxLoader } from "../page/newssandbox/NewsSandBox";
 import Home from "../page/newssandbox/home/Home";
 import UserList from "../page/newssandbox/user-manage/UserList";
 import RoleList from "../page/newssandbox/permit-manage/RoleList";
@@ -12,10 +12,10 @@ const IndexRouter = createHashRouter([
   {
     path: "/",
     element: <NewsSandBox />,
-    loader: newsSandBoxLoader,
+    loader: NewsSandBoxLoader,
     children: [
       {
-        index: true,
+        path: "/home",
         element: <Home />,
       },
       {

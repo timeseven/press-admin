@@ -31,13 +31,17 @@ const NewsSandBox = () => {
 };
 
 // News SandBox loader
-const newsSandBoxLoader = () => {
+const NewsSandBoxLoader = (param) => {
   if (!localStorage.getItem("token")) {
     console.log("no authority", localStorage.getItem("token"));
     return redirect("/login");
   }
+  if (param.request.url && param.request.url.split("/")[3] === "") {
+    return redirect("/home");
+  }
+  console.log("loader", param);
   return null;
 };
 
-export { newsSandBoxLoader };
+export { NewsSandBoxLoader };
 export default NewsSandBox;
