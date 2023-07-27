@@ -13,11 +13,16 @@ instance.interceptors.request.use((config) => {
 });
 
 const fetch = {
+  axios: instance,
   get(url, params) {
-    return instance.get(url, { params });
+    return instance.get(url, params);
   },
   post() {
     return instance.post.apply(instance, arguments);
+  },
+  delete() {
+    console.log("delete:", instance, ...arguments);
+    return instance.delete.apply(instance, arguments);
   },
 };
 

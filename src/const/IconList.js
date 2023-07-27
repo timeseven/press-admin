@@ -5,6 +5,9 @@ import {
   HomeOutlined,
   TeamOutlined,
   KeyOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  ExclamationCircleFilled,
 } from "@ant-design/icons";
 
 const IconList = {
@@ -25,6 +28,9 @@ const IconList = {
   "/publish-manage/unpublished": <KeyOutlined />,
   "/publish-manage/published": <KeyOutlined />,
   "/publish-manage/sunset": <KeyOutlined />,
+  "/delete": <DeleteOutlined />,
+  "/edit": <EditOutlined />,
+  "/exclamation": <ExclamationCircleFilled />,
 };
 
 export { IconList };

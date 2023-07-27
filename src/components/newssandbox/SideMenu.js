@@ -3,14 +3,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import { IconList } from "../../const/IconList";
 import { useEffect, useState } from "react";
-import { getPermit } from "../../api";
+import { getSideMenu } from "../../api";
 
 const { Sider } = Layout;
 
 const SideMenu = () => {
   const navigate = useNavigate();
   let location = useLocation();
-  const selectKeys = [location.pathname]; // keep sidemenu is selected after freshing the page
+  const selectKeys = [location.pathname]; // keep sidemenu is selected after refreshing the page
   const openKeys = ["/" + location.pathname.split("/")[1]]; // keep the parent of the selected sidemenu open
   console.log("uselocation", location);
   const [items, setItem] = useState([]);
@@ -18,10 +18,11 @@ const SideMenu = () => {
     navigate(e.key);
   };
   useEffect(() => {
+    // get the permits and the relevant children data and re-assembly them
     (async function getData() {
       let data = [];
       try {
-        const res = await getPermit();
+        const res = await getSideMenu();
         data =
           res.data &&
           res.data.map((item) => {
@@ -58,7 +59,7 @@ const SideMenu = () => {
   return (
     <Sider trigger={null} collapsible collapsed={false}>
       <div style={{ display: "flex", height: "100%", flexDirection: "column" }}>
-        <div className="logo">Press Administration</div>
+        <div className="logo">News Administration</div>
         <div style={{ flex: 1, overflow: "auto" }}>
           <Menu
             onClick={onClick}
