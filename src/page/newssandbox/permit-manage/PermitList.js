@@ -1,6 +1,6 @@
-import { Button, Table, Tag, Modal } from "antd";
+import { Button, Table, Tag, Modal, Popover, Switch } from "antd";
 import { useEffect, useState } from "react";
-import { deletePermit, getSideMenu } from "../../../api";
+import { deleteChildren, deletePermit, editChildren, editPermit, getSideMenu } from "../../../api";
 import { IconList } from "../../../const/IconList";
 const { confirm } = Modal;
 
@@ -45,8 +45,29 @@ const PermitList = () => {
       render: (item) => {
         return (
           <div>
-            <Button danger shape="circle" icon={IconList["/delete"]} onClick={() => confirmMethod(item)}></Button>
-            <Button type="primary" shape="circle" icon={IconList["/edit"]}></Button>
+            <span style={{ marginRight: "10px" }}>
+              <Button danger shape="circle" icon={IconList["/delete"]} onClick={() => confirmMethod(item)}></Button>
+            </span>
+            <span>
+              <Popover
+                content={
+                  <div style={{ textAlign: "center" }}>
+                    <span style={{ marginRight: "5px" }}>Off</span>
+                    <Switch checked={item.pagepermission} onChange={() => changePermission(item)}></Switch>
+                    <span style={{ marginLeft: "5px" }}>On</span>
+                  </div>
+                }
+                title="Page Permission"
+                trigger={item.pagepermission === undefined ? "" : "click"}
+              >
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={IconList["/edit"]}
+                  disabled={item.pagepermission === undefined}
+                ></Button>
+              </Popover>
+            </span>
           </div>
         );
       },
@@ -70,16 +91,31 @@ const PermitList = () => {
 
   const deleteMehod = (item) => {
     if (item.grade === 1) {
-      // grade 1 data
+      //delete grade 1 data
       setDataSource(dataSource.filter((data) => data.id !== item.id));
-      // deletePermit(item.id);
+      deletePermit(item.id);
     } else {
-      //grade 2 children data
+      //delete grade 2 children data
       console.log(item.permitId);
       let list = dataSource.filter((data) => data.id === item.permitId);
       list[0].children = list[0].children.filter((data) => data.id !== item.id);
-      setDataSource([...dataSource]);
+      setDataSource([...dataSource]); // grade 1 data didn't change. therefore we have to set the changed children data
+      deleteChildren(item.id);
       console.log(list, "xxxx", dataSource);
+    }
+  };
+
+  // change page permission
+  const changePermission = (item) => {
+    item.pagepermission = item.pagepermission === 1 ? 0 : 1;
+    // sync dataSource
+    setDataSource([...dataSource]);
+    console.log("changePermission", item);
+    // patch to backend
+    if (item.grade === 1) {
+      editPermit(item.id, { pagepermission: item.pagepermission });
+    } else {
+      editChildren(item.id, { pagepermission: item.pagepermission });
     }
   };
 

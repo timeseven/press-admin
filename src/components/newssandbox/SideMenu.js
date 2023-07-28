@@ -27,7 +27,7 @@ const SideMenu = () => {
           res.data &&
           res.data.map((item) => {
             return (
-              item.pagepermisson === 1 && {
+              item.pagepermission === 1 && {
                 label: item.title,
                 key: item.key,
                 icon: IconList[item.key],
@@ -35,20 +35,20 @@ const SideMenu = () => {
                   item.children.length > 0 &&
                   item.children.map((data) => {
                     return (
-                      data.pagepermisson === 1 && {
+                      data.pagepermission === 1 && {
                         id: data.id,
                         label: data.title,
                         key: data.key,
                         permitid: data.permitId,
                         grade: data.grade,
                         icon: IconList[data.key],
-                        pagepermisson: data.pagepermisson,
+                        pagepermission: data.pagepermission,
                       }
                     );
                   }),
                 id: item.id,
                 grade: item.grade,
-                pagepermisson: item.pagepermisson,
+                pagepermission: item.pagepermission,
               }
             );
           });

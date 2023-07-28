@@ -6,14 +6,29 @@ export const getUser = (param) => fetch.get("/users", param);
 // getRole
 export const getRole = (param) => fetch.get("/roles", param);
 
+// deleteRole
+export const deleteRole = (param) => fetch.delete(`/roles/${param}`);
+
+// editRole
+export const editRole = (id, param) => fetch.patch(`/roles/${id}`, param);
+
 // getChildren
 export const getChildren = (param) => fetch.get("/children", param);
+
+// deleteChildren
+export const deleteChildren = (param) => fetch.delete(`/children/${param}`);
+
+// editChildren
+export const editChildren = (id, param) => fetch.patch(`/children/${id}`, param);
 
 // getPermit
 export const getPermit = (param) => fetch.get("/permits", param);
 
 // deletePermit
 export const deletePermit = (param) => fetch.delete(`/permits/${param}`);
+
+// editPermit
+export const editPermit = (id, param) => fetch.patch(`/permits/${id}`, param);
 
 // getSideMenu
 export const getSideMenu = (param) => fetch.get("/permits?_embed=children", param);
