@@ -42,7 +42,9 @@ const TopHeader = () => {
         }}
       />
       <div style={{ float: "right" }}>
-        <span>Welcome Admin Back</span>
+        <span>
+          Welcome <span style={{ color: "blue" }}>admin</span> Back
+        </span>
         <Dropdown menu={{ items }} sizePopupArrow="105">
           <a onClick={(e) => e.preventDefault()} href={{}} style={{ padding: "0 15px" }}>
             <Space>

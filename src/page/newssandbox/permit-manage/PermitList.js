@@ -10,13 +10,12 @@ const PermitList = () => {
     (async function getData() {
       try {
         const res = await getSideMenu();
-        res.data &&
-          res.data.forEach((item) => {
-            if (item.children.length === 0) {
-              item.children = "";
-            }
-          }); // don't show + on Home Page
-        setDataSource(res && res.data);
+        res.data?.forEach((item) => {
+          if (item.children.length === 0) {
+            item.children = "";
+          }
+        }); // don't show + on Home Page
+        setDataSource(res?.data);
       } catch (error) {}
     })();
   }, []);

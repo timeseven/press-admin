@@ -37,7 +37,7 @@ const NewsSandBoxLoader = (param) => {
     console.log("no authority", localStorage.getItem("token"));
     return redirect("/login");
   }
-  if (param.request.url && param.request.url.split("/")[3] === "") {
+  if (param.request.url?.split("/")[3] === "") {
     return redirect("/home");
   }
   console.log("loader", param);

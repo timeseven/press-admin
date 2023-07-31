@@ -23,35 +23,33 @@ const SideMenu = () => {
       let data = [];
       try {
         const res = await getSideMenu();
-        data =
-          res.data &&
-          res.data.map((item) => {
-            return (
-              item.pagepermission === 1 && {
-                label: item.title,
-                key: item.key,
-                icon: IconList[item.key],
-                children:
-                  item.children.length > 0 &&
-                  item.children.map((data) => {
-                    return (
-                      data.pagepermission === 1 && {
-                        id: data.id,
-                        label: data.title,
-                        key: data.key,
-                        permitid: data.permitId,
-                        grade: data.grade,
-                        icon: IconList[data.key],
-                        pagepermission: data.pagepermission,
-                      }
-                    );
-                  }),
-                id: item.id,
-                grade: item.grade,
-                pagepermission: item.pagepermission,
-              }
-            );
-          });
+        data = res.data?.map((item) => {
+          return (
+            item.pagepermission === 1 && {
+              label: item.title,
+              key: item.key,
+              icon: IconList[item.key],
+              children:
+                item.children.length > 0 &&
+                item.children.map((data) => {
+                  return (
+                    data.pagepermission === 1 && {
+                      id: data.id,
+                      label: data.title,
+                      key: data.key,
+                      permitid: data.permitId,
+                      grade: data.grade,
+                      icon: IconList[data.key],
+                      pagepermission: data.pagepermission,
+                    }
+                  );
+                }),
+              id: item.id,
+              grade: item.grade,
+              pagepermission: item.pagepermission,
+            }
+          );
+        });
         setItem(data);
       } catch (error) {}
     })();

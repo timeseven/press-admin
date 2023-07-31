@@ -1,7 +1,7 @@
 import fetch from "../plugins/axios";
 
 // getUser
-export const getUser = (param) => fetch.get("/users", param);
+export const getUser = (param) => fetch.get("/users?_expand=role", param);
 
 // getRole
 export const getRole = (param) => fetch.get("/roles", param);
