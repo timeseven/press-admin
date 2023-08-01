@@ -3,6 +3,15 @@ import fetch from "../plugins/axios";
 // getUser
 export const getUser = (param) => fetch.get("/users?_expand=role", param);
 
+// addUser
+export const addUser = (param) => fetch.post("/users", param);
+
+// editUser
+export const editUser = (id, param) => fetch.patch(`/users/${id}`, param);
+
+// deleteUser
+export const deleteUser = (param) => fetch.delete(`/users/${param}`);
+
 // getRole
 export const getRole = (param) => fetch.get("/roles", param);
 

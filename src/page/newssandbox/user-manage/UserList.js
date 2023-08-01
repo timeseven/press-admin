@@ -1,16 +1,20 @@
 import { useEffect, useState, useRef } from "react";
 import { Button, Table, Modal, Switch } from "antd";
-import { deleteChildren, deletePermit, getUser, getRegion, getRole } from "../../../api";
+import { getUser, addUser, deleteUser, editUser, getRegion, getRole } from "../../../api";
 import { IconList } from "../../../const/IconList";
 import UserForm from "../../../components/user-manage/UserForm";
 const { confirm } = Modal;
 
 const UserList = () => {
   const [dataSource, setDataSource] = useState([]);
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isAddOpen, setAddOpen] = useState(false);
+  const [isUpdateOpen, setUpdateOpen] = useState(false);
   const [roleList, setRoleList] = useState([]);
   const [regionList, setRegionList] = useState([]);
+  const [isUpdateDisabled, setUpdateDisabled] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const addForm = useRef();
+  const updateForm = useRef();
   // get user info
   useEffect(() => {
     (async function getData() {
@@ -47,6 +51,19 @@ const UserList = () => {
       render: (region) => {
         return <b>{region === "" ? "Global" : region}</b>;
       },
+      filters: [
+        {
+          text: "Global",
+          value: "",
+        },
+        ...regionList.map((item) => {
+          return {
+            text: item.title,
+            value: item.value,
+          };
+        }),
+      ],
+      onFilter: (value, item) => item.region === value,
     },
     {
       title: "Role Name",
@@ -63,7 +80,7 @@ const UserList = () => {
       title: "Status",
       dataIndex: "roleState",
       render: (roleState, item) => {
-        return <Switch checked={roleState} disabled={item.default}></Switch>;
+        return <Switch checked={roleState} disabled={item.default} onChange={() => handleChange(item)}></Switch>;
       },
     },
     {
@@ -81,7 +98,13 @@ const UserList = () => {
               ></Button>
             </span>
             <span>
-              <Button type="primary" shape="circle" icon={IconList["/edit"]} disabled={item.default}></Button>
+              <Button
+                type="primary"
+                shape="circle"
+                icon={IconList["/edit"]}
+                disabled={item.default}
+                onClick={() => handleUpdate(item)}
+              ></Button>
             </span>
           </div>
         );
@@ -104,20 +127,75 @@ const UserList = () => {
     });
   };
 
+  // delete user
   const deleteMehod = (item) => {
-    if (item.grade === 1) {
-      //delete grade 1 data
-      setDataSource(dataSource.filter((data) => data.id !== item.id));
-      deletePermit(item.id);
+    setDataSource(dataSource.filter((data) => data.id !== item.id));
+    deleteUser(item.id);
+  };
+
+  const addFormOk = () => {
+    addForm.current
+      .validateFields()
+      .then((value) => {
+        // post to backend, create id
+        addUser({ ...value, roleState: true, default: false }).then((res) => {
+          setDataSource([...dataSource, { ...res.data, role: roleList.filter((item) => item.id === value.roleId)[0] }]); // update data to page
+          setAddOpen(false);
+          addForm.current.resetFields(); // reset form
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // change status
+  const handleChange = (item) => {
+    item.roleState = !item.roleState;
+    setDataSource([...dataSource]);
+    editUser(item.id, { roleState: item.roleState });
+  };
+
+  const handleUpdate = async (item) => {
+    await setUpdateOpen(true);
+    console.log("isUpdateDisabled when open modal", isUpdateDisabled);
+    if (item.roleId === 1) {
+      //disabled
+      setUpdateDisabled(true);
     } else {
-      //delete grade 2 children data
-      console.log(item.permitId);
-      let list = dataSource.filter((data) => data.id === item.permitId);
-      list[0].children = list[0].children.filter((data) => data.id !== item.id);
-      setDataSource([...dataSource]); // grade 1 data didn't change. therefore we have to set the changed children data
-      deleteChildren(item.id);
-      console.log(list, "xxxx", dataSource);
+      // cancel disabled
+      setUpdateDisabled(false);
     }
+    setCurrentUser(item);
+    updateForm.current.setFieldsValue(item);
+  };
+
+  // update user
+  const updateFormOk = () => {
+    updateForm.current
+      .validateFields()
+      .then((value) => {
+        setUpdateOpen(false);
+        setDataSource(
+          dataSource.map((item) => {
+            if (item.id === currentUser.id) {
+              return {
+                ...item,
+                ...value,
+                role: roleList.filter((item) => item.id === value.roleId)[0],
+              };
+            }
+            return item;
+          })
+        );
+        setUpdateDisabled(!isUpdateDisabled); // reverse value to activate useEffect in UserForm
+        // post to backend, create id
+        editUser(currentUser.id, value);
+        console.log(value, "updateFormOk");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -125,7 +203,7 @@ const UserList = () => {
       <Button
         type="primary"
         onClick={() => {
-          setModalOpen(true);
+          setAddOpen(true);
         }}
       >
         Add User
@@ -138,27 +216,38 @@ const UserList = () => {
         }}
         rowKey={(item) => item.id}
       />
+      {/* Add */}
       <Modal
-        open={isModalOpen}
+        open={isAddOpen}
         title="Add User"
         okText="Confirm"
         cancelText="Cancel"
         onCancel={() => {
-          setModalOpen(false);
+          setAddOpen(false);
           console.log("cancel");
         }}
-        onOk={() => {
-          addForm.current
-            .validateFields()
-            .then((value) => {
-              console.log(value, "value");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }}
+        onOk={addFormOk}
       >
         <UserForm roleList={roleList} regionList={regionList} ref={addForm}></UserForm>
+      </Modal>
+      {/* Update */}
+      <Modal
+        open={isUpdateOpen}
+        title="Update User"
+        okText="Confirm"
+        cancelText="Cancel"
+        onCancel={async () => {
+          await setUpdateDisabled(!isUpdateDisabled); // reverse value to activate useEffect in UserForm
+          setUpdateOpen(false);
+        }}
+        onOk={updateFormOk}
+      >
+        <UserForm
+          roleList={roleList}
+          regionList={regionList}
+          isUpdateDisabled={isUpdateDisabled}
+          ref={updateForm}
+        ></UserForm>
       </Modal>
     </div>
   );

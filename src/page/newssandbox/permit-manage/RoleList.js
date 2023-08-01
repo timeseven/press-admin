@@ -42,9 +42,9 @@ const RoleList = () => {
   useEffect(() => {
     (async function getData() {
       const res = await getRole();
-      setDataSource(res && res.data);
+      setDataSource(res?.data);
       const resp = await getSideMenu();
-      setPermitList(resp && resp.data);
+      setPermitList(resp?.data);
       console.log(res.data, "data");
     })();
   }, []);

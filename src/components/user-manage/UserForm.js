@@ -1,8 +1,13 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useState, useEffect } from "react";
 import { Form, Input, Select } from "antd";
 
 const UserForm = forwardRef((props, ref) => {
   const [isDisabled, setIsDisabled] = useState(false);
+
+  useEffect(() => {
+    setIsDisabled(props.isUpdateDisabled);
+    console.log("disabled shown ", props.isUpdateDisabled);
+  }, [props.isUpdateDisabled]);
   return (
     <div>
       {" "}
@@ -39,7 +44,7 @@ const UserForm = forwardRef((props, ref) => {
             onChange={(value) => {
               if (value === 1) {
                 setIsDisabled(true);
-                // clear region value
+                // value === 1 is super admin, clear region value
                 ref.current.setFieldsValue({
                   region: "",
                 });
