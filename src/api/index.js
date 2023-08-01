@@ -1,5 +1,9 @@
 import fetch from "../plugins/axios";
 
+// loginUser because of the limitation of json-server, we use .get to process login simulation. In reality, we use .post instead.
+export const loginUser = (username, password) =>
+  fetch.get(`/users?username=${username}&password=${password}&roleState=true&_expand=role`);
+
 // getUser
 export const getUser = (param) => fetch.get("/users?_expand=role", param);
 

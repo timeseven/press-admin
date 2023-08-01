@@ -3,6 +3,7 @@ import { Button, Table, Modal, Switch } from "antd";
 import { getUser, addUser, deleteUser, editUser, getRegion, getRole } from "../../../api";
 import { IconList } from "../../../const/IconList";
 import UserForm from "../../../components/user-manage/UserForm";
+import { RoleObj } from "../../../const/RoleObj";
 const { confirm } = Modal;
 
 const UserList = () => {
@@ -15,15 +16,28 @@ const UserList = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const addForm = useRef();
   const updateForm = useRef();
+
+  const { roleId, region, username } = JSON.parse(localStorage.getItem("token"));
   // get user info
   useEffect(() => {
     (async function getData() {
       try {
         const res = await getUser();
-        setDataSource(res?.data);
+        const list = res?.data;
+        //if you are super administrator, all data will be shown.
+        //if you are field manager, you can only check your data and the data of field editors from your region.
+        //field editors can't see the userlist
+        setDataSource(
+          RoleObj[roleId] === "Super Administrator"
+            ? list
+            : [
+                ...list.filter((item) => item.username === username),
+                ...list.filter((item) => item.region === region && RoleObj[item.roleId] === "Field Editor"),
+              ]
+        );
       } catch (error) {}
     })();
-  }, []);
+  }, [roleId, region, username]);
 
   // get role info
   useEffect(() => {
@@ -228,7 +242,7 @@ const UserList = () => {
         }}
         onOk={addFormOk}
       >
-        <UserForm roleList={roleList} regionList={regionList} ref={addForm}></UserForm>
+        <UserForm roleList={roleList} regionList={regionList} ref={addForm} isUpdate={false}></UserForm>
       </Modal>
       {/* Update */}
       <Modal
@@ -247,6 +261,7 @@ const UserList = () => {
           regionList={regionList}
           isUpdateDisabled={isUpdateDisabled}
           ref={updateForm}
+          isUpdate={true}
         ></UserForm>
       </Modal>
     </div>

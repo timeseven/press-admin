@@ -91,9 +91,9 @@ const RoleList = () => {
         return item;
       })
     );
+    console.log("currentPermit", currentPermit);
     // patch to backend
     editRole(currentId, { permits: currentPermit });
-    console.log(currentPermit.checked, "<><><<><>");
   };
   const handleCancel = () => {
     setModalOpen(false);
@@ -101,7 +101,7 @@ const RoleList = () => {
 
   const onCheck = (checkedKey) => {
     console.log(checkedKey, "checkedKey");
-    setCurrentPermit(checkedKey);
+    setCurrentPermit(checkedKey.checked);
   };
 
   return (

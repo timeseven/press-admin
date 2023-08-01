@@ -1,6 +1,6 @@
 import {
-  // MenuFoldOutlined,
-  // MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
   UserOutlined,
   HomeOutlined,
   TeamOutlined,
@@ -8,6 +8,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   ExclamationCircleFilled,
+  LockOutlined,
 } from "@ant-design/icons";
 
 const IconList = {
@@ -31,6 +32,9 @@ const IconList = {
   "/delete": <DeleteOutlined />,
   "/edit": <EditOutlined />,
   "/exclamation": <ExclamationCircleFilled />,
+  "/menufold": <MenuFoldOutlined />,
+  "/menuunfold": <MenuUnfoldOutlined />,
+  "/lockOut": <LockOutlined />,
 };
 
 export { IconList };

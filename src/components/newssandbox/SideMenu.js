@@ -14,6 +14,7 @@ const SideMenu = () => {
   const openKeys = ["/" + location.pathname.split("/")[1]]; // keep the parent of the selected sidemenu open
   console.log("uselocation", location);
   const [items, setItem] = useState([]);
+
   const onClick = (e) => {
     navigate(e.key);
   };
@@ -21,11 +22,19 @@ const SideMenu = () => {
     // get the permits and the relevant children data and re-assembly them
     (async function getData() {
       let data = [];
+      const {
+        role: { permits },
+      } = JSON.parse(localStorage.getItem("token"));
+      console.log("permits>>>>>>>", permits);
+      const checkPagePermission = (item) => {
+        console.log("checkPage:", item.pagepermission, permits.includes(item.key));
+        return item.pagepermission && permits.includes(item.key);
+      };
       try {
         const res = await getSideMenu();
         data = res.data?.map((item) => {
           return (
-            item.pagepermission === 1 && {
+            checkPagePermission(item) && {
               label: item.title,
               key: item.key,
               icon: IconList[item.key],
@@ -33,7 +42,7 @@ const SideMenu = () => {
                 item.children.length > 0 &&
                 item.children.map((data) => {
                   return (
-                    data.pagepermission === 1 && {
+                    checkPagePermission(data) && {
                       id: data.id,
                       label: data.title,
                       key: data.key,
@@ -54,6 +63,7 @@ const SideMenu = () => {
       } catch (error) {}
     })();
   }, []);
+
   return (
     <Sider trigger={null} collapsible collapsed={false}>
       <div style={{ display: "flex", height: "100%", flexDirection: "column" }}>
