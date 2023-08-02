@@ -31,7 +31,7 @@ const TopHeader = () => {
   const onClick = (e) => {
     navigate(e.key);
     if (e.key === "/login") {
-      localStorage.removeItem("token");
+      localStorage.clear();
     }
   };
   return (

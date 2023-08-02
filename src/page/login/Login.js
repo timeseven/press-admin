@@ -7,10 +7,10 @@ import { loadSlim } from "tsparticles-slim";
 import { useCallback } from "react";
 import { loginUser } from "../../api";
 
-const Login = () => {
+const Login = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
   const onFinish = ({ username, password }) => {
-    (async function getData() {
+    (async function GetData() {
       try {
         const res = await loginUser(username, password);
         if (res?.data?.length === 0) {
@@ -18,6 +18,7 @@ const Login = () => {
         } else {
           message.success("Login Success!");
           localStorage.setItem("token", JSON.stringify(res.data[0]));
+          onLoginSuccess(res.data[0]);
           navigate("/");
         }
       } catch (error) {}

@@ -4,6 +4,7 @@ import { Layout, Menu } from "antd";
 import { IconList } from "../../const/IconList";
 import { useEffect, useState } from "react";
 import { getSideMenu } from "../../api";
+import { RouterCheck } from "../../utils/RouterCheck";
 
 const { Sider } = Layout;
 
@@ -12,8 +13,7 @@ const SideMenu = () => {
   let location = useLocation();
   const selectKeys = [location.pathname]; // keep sidemenu is selected after refreshing the page
   const openKeys = ["/" + location.pathname.split("/")[1]]; // keep the parent of the selected sidemenu open
-  console.log("uselocation", location);
-  const [items, setItem] = useState([]);
+  const [items, setItems] = useState([]);
 
   const onClick = (e) => {
     navigate(e.key);
@@ -25,16 +25,11 @@ const SideMenu = () => {
       const {
         role: { permits },
       } = JSON.parse(localStorage.getItem("token"));
-      console.log("permits>>>>>>>", permits);
-      const checkPagePermission = (item) => {
-        console.log("checkPage:", item.pagepermission, permits.includes(item.key));
-        return item.pagepermission && permits.includes(item.key);
-      };
       try {
         const res = await getSideMenu();
         data = res.data?.map((item) => {
           return (
-            checkPagePermission(item) && {
+            RouterCheck(item, permits) && {
               label: item.title,
               key: item.key,
               icon: IconList[item.key],
@@ -42,7 +37,7 @@ const SideMenu = () => {
                 item.children.length > 0 &&
                 item.children.map((data) => {
                   return (
-                    checkPagePermission(data) && {
+                    RouterCheck(data, permits) && {
                       id: data.id,
                       label: data.title,
                       key: data.key,
@@ -59,7 +54,8 @@ const SideMenu = () => {
             }
           );
         });
-        setItem(data);
+        console.log("XOXOXOXOXOX", data);
+        setItems(data);
       } catch (error) {}
     })();
   }, []);
