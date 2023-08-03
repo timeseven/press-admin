@@ -8,7 +8,6 @@ import moment from "moment/moment";
 const NewsPreview = () => {
   const [previewContent, setPreviewContent] = useState([]);
   const param = useParams();
-  console.log(param, "xxxx");
   let items = [
     {
       key: "author",

@@ -45,7 +45,6 @@ const RoleList = () => {
       setDataSource(res?.data);
       const resp = await getSideMenu();
       setPermitList(resp?.data);
-      console.log(res.data, "data");
     })();
   }, []);
 
@@ -74,7 +73,6 @@ const RoleList = () => {
     setModalOpen(true);
     setCurrentPermit(item.permits);
     setCurrentId(item.id);
-    console.log(item);
   };
 
   const handleOk = () => {
@@ -91,7 +89,6 @@ const RoleList = () => {
         return item;
       })
     );
-    console.log("currentPermit", currentPermit);
     // patch to backend
     editRole(currentId, { permits: currentPermit });
   };
@@ -100,7 +97,6 @@ const RoleList = () => {
   };
 
   const onCheck = (checkedKey) => {
-    console.log(checkedKey, "checkedKey");
     setCurrentPermit(checkedKey.checked);
   };
 

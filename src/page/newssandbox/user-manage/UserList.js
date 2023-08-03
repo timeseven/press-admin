@@ -18,7 +18,6 @@ const UserList = () => {
   const updateForm = useRef();
 
   const { roleId, region, username } = JSON.parse(localStorage.getItem("token"));
-  console.log("userlist");
   // get user info
   useEffect(() => {
     (async function getData() {
@@ -173,7 +172,6 @@ const UserList = () => {
 
   const handleUpdate = async (item) => {
     await setUpdateOpen(true);
-    console.log("isUpdateDisabled when open modal", isUpdateDisabled);
     if (item.roleId === 1) {
       //disabled
       setUpdateDisabled(true);

@@ -21,11 +21,9 @@ const fetch = {
     return instance.post.apply(instance, arguments);
   },
   delete() {
-    console.log("delete:", instance, arguments);
     return instance.delete.apply(instance, arguments);
   },
   patch() {
-    console.log("patch:", instance, arguments);
     return instance.patch.apply(instance, arguments);
   },
 };

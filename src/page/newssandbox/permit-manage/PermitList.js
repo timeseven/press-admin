@@ -95,12 +95,10 @@ const PermitList = () => {
       deletePermit(item.id);
     } else {
       //delete grade 2 children data
-      console.log(item.permitId);
       let list = dataSource.filter((data) => data.id === item.permitId);
       list[0].children = list[0].children.filter((data) => data.id !== item.id);
       setDataSource([...dataSource]); // grade 1 data didn't change. therefore we have to set the changed children data
       deleteChildren(item.id);
-      console.log(list, "xxxx", dataSource);
     }
   };
 

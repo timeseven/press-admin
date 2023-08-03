@@ -1,7 +1,7 @@
 import { Steps, Button, Form, Input, Select, message, notification } from "antd";
 import "./NewsAdd.css";
 import { useEffect, useState, useRef } from "react";
-import { editNews, getCategory } from "../../../api";
+import { createNews, getCategory } from "../../../api";
 import NewsEditor from "../../../components/news-manage/NewsEditor";
 import { useNavigate } from "react-router-dom";
 
@@ -25,7 +25,6 @@ const NewsAdd = () => {
       NewsForm.current
         .validateFields()
         .then((res) => {
-          console.log(res);
           setFormInfo(res);
           setCurrentStep(currentStep + 1);
         })
@@ -36,7 +35,6 @@ const NewsAdd = () => {
       if (content === "" || content.trim() === "<p></p>") {
         message.error("The News Content can't be empty!");
       } else {
-        console.log("NEWSSSSSSSSSS", formInfo, content);
         setCurrentStep(currentStep + 1);
       }
     }
@@ -45,7 +43,7 @@ const NewsAdd = () => {
     setCurrentStep(currentStep - 1);
   };
   const handleSave = (auditState) => {
-    editNews({
+    createNews({
       ...formInfo,
       content: content,
       region: User.region ? User.region : "Global",
@@ -117,7 +115,6 @@ const NewsAdd = () => {
           <NewsEditor
             getContent={(value) => {
               setContent(value);
-              console.log("NewsEditor", value);
             }}
           ></NewsEditor>
         </div>

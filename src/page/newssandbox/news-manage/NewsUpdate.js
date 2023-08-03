@@ -148,7 +148,6 @@ const NewsUpdate = () => {
           <NewsEditor
             getContent={(value) => {
               setContent(value);
-              console.log("NewsEditor", value);
             }}
             content={content}
           ></NewsEditor>
