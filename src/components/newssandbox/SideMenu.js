@@ -5,6 +5,8 @@ import { IconList } from "../../const/IconList";
 import { useEffect, useState } from "react";
 import { getSideMenu } from "../../api";
 import { RouterCheck } from "../../utils/RouterCheck";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 const { Sider } = Layout;
 
@@ -16,8 +18,11 @@ const SideMenu = () => {
   const [items, setItems] = useState([]);
 
   const onClick = (e) => {
+    NProgress.start();
     navigate(e.key);
+    console.log("sidemenu click");
   };
+  NProgress.done();
   useEffect(() => {
     // get the permits and the relevant children data and re-assembly them
     (async function getData() {

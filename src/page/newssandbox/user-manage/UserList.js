@@ -18,6 +18,7 @@ const UserList = () => {
   const updateForm = useRef();
 
   const { roleId, region, username } = JSON.parse(localStorage.getItem("token"));
+  console.log("userlist");
   // get user info
   useEffect(() => {
     (async function getData() {

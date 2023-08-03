@@ -3,6 +3,8 @@ import TopHeader from "../../components/newssandbox/TopHeader";
 import { Outlet, redirect } from "react-router-dom";
 import { Layout, theme } from "antd";
 import "./NewsSandBox.css";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 const { Content } = Layout;
 
@@ -10,6 +12,8 @@ const NewsSandBox = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  console.log("newssandbox");
+  NProgress.start();
   return (
     <Layout>
       <SideMenu />
