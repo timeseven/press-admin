@@ -66,7 +66,6 @@ const UserForm = forwardRef((props, ref) => {
 
   useEffect(() => {
     setIsDisabled(props.isUpdateDisabled);
-    console.log("disabled shown ", props.isUpdateDisabled);
   }, [props.isUpdateDisabled]);
 
   checkRegionDisabled();

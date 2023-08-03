@@ -20,7 +20,6 @@ const SideMenu = () => {
   const onClick = (e) => {
     NProgress.start();
     navigate(e.key);
-    console.log("sidemenu click");
   };
   NProgress.done();
   useEffect(() => {
@@ -34,7 +33,7 @@ const SideMenu = () => {
         const res = await getSideMenu();
         data = res.data?.map((item) => {
           return (
-            RouterCheck(item, permits) && {
+            RouterCheck(item, permits, true) && {
               label: item.title,
               key: item.key,
               icon: IconList[item.key],
@@ -42,7 +41,7 @@ const SideMenu = () => {
                 item.children.length > 0 &&
                 item.children.map((data) => {
                   return (
-                    RouterCheck(data, permits) && {
+                    RouterCheck(data, permits, true) && {
                       id: data.id,
                       label: data.title,
                       key: data.key,
@@ -59,7 +58,6 @@ const SideMenu = () => {
             }
           );
         });
-        console.log("XOXOXOXOXOX", data);
         setItems(data);
       } catch (error) {}
     })();

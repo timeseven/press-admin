@@ -9,6 +9,8 @@ import {
   EditOutlined,
   ExclamationCircleFilled,
   LockOutlined,
+  UploadOutlined,
+  ArrowLeftOutlined,
 } from "@ant-design/icons";
 
 const IconList = {
@@ -35,6 +37,8 @@ const IconList = {
   "/menufold": <MenuFoldOutlined />,
   "/menuunfold": <MenuUnfoldOutlined />,
   "/lockOut": <LockOutlined />,
+  "/upload": <UploadOutlined />,
+  "/arrowleft": <ArrowLeftOutlined />,
 };
 
 export { IconList };

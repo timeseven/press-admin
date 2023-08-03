@@ -7,7 +7,6 @@ import { RouterCheck } from "../utils/RouterCheck";
 import Login from "../page/login/Login";
 
 const IndexRouter = () => {
-  console.log(JSON.parse(localStorage.getItem("dynamicRoutes")), "xxxxxxx");
   const [dynamicRoutes, setDynamicRoutes] = useState(
     JSON.parse(localStorage.getItem("dynamicRoutes"))?.map((item) => {
       return {
@@ -19,11 +18,11 @@ const IndexRouter = () => {
   const [routesData, setRoutesData] = useState([]);
   const createDynamicRoutes = (permissionData) => {
     // Process the permissionsData to create the dynamic router configuration
-    // console.log("creteDynamicROutes:", routesData, permissionData);
+    console.log("creteDynamicROutes:", routesData, permissionData);
     const filterRouter = routesData
       ?.filter((item) => {
         // console.log("filter before", RouterCheck(item, permissionData), !!LocalRouterMap[item.key], item.key);
-        return RouterCheck(item, permissionData) && !!LocalRouterMap[item.key];
+        return RouterCheck(item, permissionData, false) && !!LocalRouterMap[item.key];
       })
       .map((item) => {
         // console.log("after filter", LocalRouterMap, item.key, LocalRouterMap[`${item.key}`], typeof item.key);
@@ -34,7 +33,7 @@ const IndexRouter = () => {
       });
 
     setDynamicRoutes(filterRouter);
-    // console.log("filterROuter", filterRouter);
+    console.log("filterROuter", filterRouter);
     localStorage.setItem("dynamicRoutes", JSON.stringify(filterRouter));
   };
 
@@ -46,9 +45,7 @@ const IndexRouter = () => {
     } = routerList;
     createDynamicRoutes(permits);
   };
-  console.log("router change?");
   useEffect(() => {
-    console.log("router render done?");
     (async function GetData() {
       try {
         const childList = await getChildren();

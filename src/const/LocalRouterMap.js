@@ -6,6 +6,8 @@ import Home from "../page/newssandbox/home/Home";
 import NewsAdd from "../page/newssandbox/news-manage/NewsAdd";
 import NewsCategory from "../page/newssandbox/news-manage/NewsCategory";
 import NewsDraft from "../page/newssandbox/news-manage/NewsDraft";
+import NewsPreview from "../page/newssandbox/news-manage/NewsPreview";
+import NewsUpdate from "../page/newssandbox/news-manage/NewsUpdate";
 import NoPermit from "../page/newssandbox/no-permit/NoPermit";
 import PermitList from "../page/newssandbox/permit-manage/PermitList";
 import RoleList from "../page/newssandbox/permit-manage/RoleList";
@@ -22,6 +24,8 @@ const LocalRouterMap = {
   "/permit-manage/permit/list": <PermitList />,
   "/news-manage/add": <NewsAdd />,
   "/news-manage/draft": <NewsDraft />,
+  "/news-manage/preview/:id": <NewsPreview />,
+  "/news-manage/update/:id": <NewsUpdate />,
   "/news-manage/category": <NewsCategory />,
   "/audit-manage/audit": <Audit />,
   "/audit-manage/list": <AuditList />,

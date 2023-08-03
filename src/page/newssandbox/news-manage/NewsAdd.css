@@ -1,0 +1,9 @@
+.page-header {
+  margin: 15px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}

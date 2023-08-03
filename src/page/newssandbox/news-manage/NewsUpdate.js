@@ -1,11 +1,13 @@
 import { Steps, Button, Form, Input, Select, message, notification } from "antd";
 import "./NewsAdd.css";
 import { useEffect, useState, useRef } from "react";
-import { editNews, getCategory } from "../../../api";
+import { editNews, getCategory, getNewsPreviewNews } from "../../../api";
 import NewsEditor from "../../../components/news-manage/NewsEditor";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { IconList } from "../../../const/IconList";
 
-const NewsAdd = () => {
+// Copy from NewsAdd and do some changes
+const NewsUpdate = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [categoryList, setCategoryList] = useState([]);
@@ -16,6 +18,7 @@ const NewsAdd = () => {
   const User = JSON.parse(localStorage.getItem("token"));
 
   const NewsForm = useRef();
+  const param = useParams();
   const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 20 },
@@ -25,7 +28,6 @@ const NewsAdd = () => {
       NewsForm.current
         .validateFields()
         .then((res) => {
-          console.log(res);
           setFormInfo(res);
           setCurrentStep(currentStep + 1);
         })
@@ -36,7 +38,6 @@ const NewsAdd = () => {
       if (content === "" || content.trim() === "<p></p>") {
         message.error("The News Content can't be empty!");
       } else {
-        console.log("NEWSSSSSSSSSS", formInfo, content);
         setCurrentStep(currentStep + 1);
       }
     }
@@ -45,7 +46,7 @@ const NewsAdd = () => {
     setCurrentStep(currentStep - 1);
   };
   const handleSave = (auditState) => {
-    editNews({
+    editNews(param.id, {
       ...formInfo,
       content: content,
       region: User.region ? User.region : "Global",
@@ -74,9 +75,39 @@ const NewsAdd = () => {
       } catch (error) {}
     })();
   }, []);
+  useEffect(() => {
+    (async function GetData() {
+      try {
+        const res = await getNewsPreviewNews(param.id);
+        let { title, categoryId, content } = res.data;
+        NewsForm.current.setFieldsValue({
+          title,
+          categoryId,
+        });
+        setContent(content);
+      } catch (error) {}
+    })();
+  }, [param.id]);
   return (
     <div>
-      <div className="page-header">Compose News</div>
+      <span style={{ width: "65px", float: "left" }}>
+        <Button
+          type="text"
+          icon={IconList["/arrowleft"]}
+          onClick={() => {
+            window.history.back();
+          }}
+          style={{
+            fontSize: "16px",
+            width: 64,
+            height: 64,
+          }}
+        />
+      </span>
+      <span style={{ width: "300px", float: "left", marginTop: "15px" }}>
+        {" "}
+        <span style={{ fontSize: "25px", fontWeight: "bold", marginRight: "15px" }}>Update News</span>
+      </span>
       <Steps
         current={currentStep}
         items={[
@@ -119,6 +150,7 @@ const NewsAdd = () => {
               setContent(value);
               console.log("NewsEditor", value);
             }}
+            content={content}
           ></NewsEditor>
         </div>
         <div className={currentStep === 2 ? "" : "hidden"}></div>
@@ -146,4 +178,4 @@ const NewsAdd = () => {
   );
 };
 
-export default NewsAdd;
+export default NewsUpdate;
