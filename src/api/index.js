@@ -82,3 +82,7 @@ export const getAuditList = (username) =>
 
 // getAuditNews
 export const getAuditNews = (param) => fetch.get("/news?auditState=1&_expand=category", param);
+
+// getPublishManage
+export const getPublishManage = (username, type) =>
+  fetch.get(`/news?author=${username}&publishState=${type}&_expand=category`, username, type);

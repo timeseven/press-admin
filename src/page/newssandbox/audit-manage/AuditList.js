@@ -49,7 +49,6 @@ const AuditList = () => {
               <Button
                 style={{ width: "80px" }}
                 type={["", "default", "primary", "primary"][item.auditState]}
-                danger={item.auditState === 2}
                 onClick={() => handleCheck(item)}
               >
                 {["", "Revoke", "Publish", "Edit"][item.auditState]}
@@ -83,6 +82,7 @@ const AuditList = () => {
           setAuditList(auditList.filter((data) => data.id !== item.id));
           editNews(item.id, {
             publishState: 2,
+            publishTime: Date.now(),
           }).then((res) => {
             notification.info({
               message: "Notice",
