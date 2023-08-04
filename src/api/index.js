@@ -86,3 +86,12 @@ export const getAuditNews = (param) => fetch.get("/news?auditState=1&_expand=cat
 // getPublishManage
 export const getPublishManage = (username, type) =>
   fetch.get(`/news?author=${username}&publishState=${type}&_expand=category`, username, type);
+
+// getMostViews
+export const getMostViews = () => fetch.get("/news?publishState=2&_expand=category&_sort=view&_order=desc&_limit=6");
+
+// getMostStars
+export const getMostStars = () => fetch.get("/news?publishState=2&_expand=category&_sort=star&_order=desc&_limit=6");
+
+// getBarData
+export const getBarData = () => fetch.get("/news?publishState=2&_expand=category");
