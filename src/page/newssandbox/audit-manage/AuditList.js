@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { editNews, getAuditNews } from "../../../api";
+import { editNews, getAuditList } from "../../../api";
 import { Button, Table, Tag, Modal, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import { IconList } from "../../../const/IconList";
@@ -105,7 +105,7 @@ const AuditList = () => {
   useEffect(() => {
     (async function GetData() {
       try {
-        const res = await getAuditNews(username);
+        const res = await getAuditList(username);
         setAuditList(res?.data);
         console.log("res", res);
       } catch (error) {}

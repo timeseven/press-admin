@@ -11,6 +11,8 @@ import {
   LockOutlined,
   UploadOutlined,
   ArrowLeftOutlined,
+  CheckOutlined,
+  CloseOutlined,
 } from "@ant-design/icons";
 
 const IconList = {
@@ -39,6 +41,8 @@ const IconList = {
   "/lockOut": <LockOutlined />,
   "/upload": <UploadOutlined />,
   "/arrowleft": <ArrowLeftOutlined />,
+  "/check": <CheckOutlined />,
+  "/close": <CloseOutlined />,
 };
 
 export { IconList };

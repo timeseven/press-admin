@@ -49,6 +49,12 @@ export const getSideMenu = (param) => fetch.get("/permits?_embed=children", para
 // getCategory
 export const getCategory = (param) => fetch.get("/categories", param);
 
+// deleteCategory
+export const deleteCategory = (id, param) => fetch.delete(`/categories/${id}`, param);
+
+// editCategory
+export const editCategory = (id, param) => fetch.patch(`/categories/${id}`, param);
+
 // getRegion
 export const getRegion = (param) => fetch.get("/regions", param);
 
@@ -70,6 +76,9 @@ export const deleteNews = (id) => fetch.delete(`/news/${id}`, id);
 // getNewsPreview
 export const getNewsPreviewNews = (param) => fetch.get(`/news/${param}?_expand=category&_expand=role`, param);
 
-// getAuditNews
-export const getAuditNews = (username) =>
+// getAuditList
+export const getAuditList = (username) =>
   fetch.get(`/news?author=${username}&auditState_ne=0&publishState_lte=1&_expand=category`, username);
+
+// getAuditNews
+export const getAuditNews = (param) => fetch.get("/news?auditState=1&_expand=category", param);
