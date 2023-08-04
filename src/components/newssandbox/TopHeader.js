@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Dropdown, Layout, theme, Space, Avatar } from "antd";
-import { useState } from "react";
 import { IconList } from "../../const/IconList";
+import { connect } from "react-redux";
+
 const { Header } = Layout;
 const { useToken } = theme;
 
-const TopHeader = () => {
+const TopHeader = (props) => {
+  console.log(props);
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = useToken();
@@ -34,6 +35,7 @@ const TopHeader = () => {
       localStorage.clear();
     }
   };
+
   return (
     <Header
       style={{
@@ -43,8 +45,10 @@ const TopHeader = () => {
     >
       <Button
         type="text"
-        icon={collapsed ? IconList["/menuunfold"] : IconList["/menufold"]}
-        onClick={() => setCollapsed(!collapsed)}
+        icon={props.isCollapsed ? IconList["/menuunfold"] : IconList["/menufold"]}
+        onClick={() => {
+          props.changeCollapsed();
+        }}
         style={{
           fontSize: "16px",
           width: 64,
@@ -67,4 +71,26 @@ const TopHeader = () => {
   );
 };
 
-export default TopHeader;
+/*
+  connect(
+    // mapStateToProps
+    // mapDispatchToProps
+  )(components)
+
+*/
+
+const mapStateToProps = ({ CollapsedReducer: { isCollapsed } }) => {
+  return {
+    isCollapsed,
+  };
+};
+
+const mapDispatchToProps = {
+  changeCollapsed() {
+    return {
+      type: "change_collapsed",
+    };
+  },
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopHeader);

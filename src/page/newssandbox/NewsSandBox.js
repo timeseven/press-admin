@@ -1,19 +1,17 @@
 import SideMenu from "../../components/newssandbox/SideMenu";
 import TopHeader from "../../components/newssandbox/TopHeader";
 import { Outlet, redirect } from "react-router-dom";
-import { Layout, theme } from "antd";
+import { Layout, Spin, theme } from "antd";
 import "./NewsSandBox.css";
-import NProgress from "nprogress";
-import "nprogress/nprogress.css";
+import { connect } from "react-redux";
 
 const { Content } = Layout;
 
-const NewsSandBox = () => {
+const NewsSandBox = (props) => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   console.log("newssandbox");
-  NProgress.start();
   return (
     <Layout>
       <SideMenu />
@@ -28,7 +26,9 @@ const NewsSandBox = () => {
             background: colorBgContainer,
           }}
         >
-          <Outlet />
+          <Spin tip="Loading..." spinning={props.isLoading}>
+            <Outlet />
+          </Spin>
         </Content>
       </Layout>
     </Layout>
@@ -49,4 +49,11 @@ const NewsSandBoxLoader = (param) => {
 };
 
 export { NewsSandBoxLoader };
-export default NewsSandBox;
+
+const mapStateToProps = ({ LoadingReducer: { isLoading } }) => {
+  return {
+    isLoading,
+  };
+};
+
+export default connect(mapStateToProps)(NewsSandBox);

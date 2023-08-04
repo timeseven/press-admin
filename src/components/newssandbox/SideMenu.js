@@ -5,12 +5,11 @@ import { IconList } from "../../const/IconList";
 import { useEffect, useState } from "react";
 import { getSideMenu } from "../../api";
 import { RouterCheck } from "../../utils/RouterCheck";
-import NProgress from "nprogress";
-import "nprogress/nprogress.css";
+import { connect } from "react-redux";
 
 const { Sider } = Layout;
 
-const SideMenu = () => {
+const SideMenu = (props) => {
   const navigate = useNavigate();
   let location = useLocation();
   const selectKeys = [location.pathname]; // keep sidemenu is selected after refreshing the page
@@ -18,10 +17,8 @@ const SideMenu = () => {
   const [items, setItems] = useState([]);
 
   const onClick = (e) => {
-    NProgress.start();
     navigate(e.key);
   };
-  NProgress.done();
   useEffect(() => {
     // get the permits and the relevant children data and re-assembly them
     (async function getData() {
@@ -64,7 +61,7 @@ const SideMenu = () => {
   }, []);
 
   return (
-    <Sider trigger={null} collapsible collapsed={false}>
+    <Sider trigger={null} collapsible collapsed={props.isCollapsed}>
       <div style={{ display: "flex", height: "100%", flexDirection: "column" }}>
         <div className="logo">News Administration</div>
         <div style={{ flex: 1, overflow: "auto" }}>
@@ -82,4 +79,10 @@ const SideMenu = () => {
   );
 };
 
-export default SideMenu;
+const mapStateToProps = ({ CollapsedReducer: { isCollapsed } }) => {
+  return {
+    isCollapsed,
+  };
+};
+
+export default connect(mapStateToProps)(SideMenu);
