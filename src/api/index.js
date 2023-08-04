@@ -69,3 +69,7 @@ export const deleteNews = (id) => fetch.delete(`/news/${id}`, id);
 
 // getNewsPreview
 export const getNewsPreviewNews = (param) => fetch.get(`/news/${param}?_expand=category&_expand=role`, param);
+
+// getAuditNews
+export const getAuditNews = (username) =>
+  fetch.get(`/news?author=${username}&auditState_ne=0&publishState_lte=1&_expand=category`, username);

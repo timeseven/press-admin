@@ -93,14 +93,14 @@ const NewsPreview = () => {
                 break;
               case "auditState": // 0: waiting for audit  1:processing audit  2: passed  3:failed
                 data.children = (
-                  <span style={{ color: ["#D929D9", "orange", "green", "red"][previewContent[data.key]] }}>
+                  <span style={{ color: ["black", "orange", "green", "red"][previewContent[data.key]] }}>
                     {["Wait for Audit", "Audit in Process", "Audit Passed", "Audit Failed"][previewContent[data.key]]}
                   </span>
                 );
                 break;
               case "publishState": // 0: unpublished  1: waiting for publishing  2:published  3:removed
                 data.children = (
-                  <span style={{ color: ["#D929D9", "orange", "green", "red"][previewContent[data.key]] }}>
+                  <span style={{ color: ["black", "orange", "green", "red"][previewContent[data.key]] }}>
                     {["Unpublished", "Wait for Publish", "Published", "Removed"][previewContent[data.key]]}
                   </span>
                 );
