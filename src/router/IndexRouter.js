@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { getChildren, getPermit } from "../api";
 import { RouterCheck } from "../utils/RouterCheck";
 import Login from "../page/login/Login";
+import News from "../page/news/News";
+import Details from "../page/news/Details";
 
 const IndexRouter = () => {
   const [dynamicRoutes, setDynamicRoutes] = useState(
@@ -72,6 +74,15 @@ const IndexRouter = () => {
     {
       path: "/login",
       element: <Login onLoginSuccess={handleLogin} />,
+    },
+    // guest mode view pages
+    {
+      path: "/news",
+      element: <News />,
+    },
+    {
+      path: "/details/:id",
+      element: <Details />,
     },
   ];
   return createHashRouter(routes);

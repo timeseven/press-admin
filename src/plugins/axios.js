@@ -12,7 +12,6 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    console.log("request");
     store.dispatch({
       type: "change_loading",
       payload: true,

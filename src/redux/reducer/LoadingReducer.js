@@ -5,7 +5,6 @@ export const LoadingReducer = (
   action
 ) => {
   let { type, payload } = action;
-  console.log(type, action);
   switch (type) {
     case "change_loading":
       let newstate = { ...prevState };
