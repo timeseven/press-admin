@@ -37,6 +37,7 @@ const NewsSandBox = (props) => {
 
 // News SandBox loader
 const NewsSandBoxLoader = (param) => {
+  console.log("loader", param);
   if (!localStorage.getItem("token")) {
     console.log("no authority", localStorage.getItem("token"));
     return redirect("/login");
@@ -44,7 +45,6 @@ const NewsSandBoxLoader = (param) => {
   if (param.request.url?.split("/")[3] === "") {
     return redirect("/home");
   }
-  console.log("loader", param);
   return null;
 };
 

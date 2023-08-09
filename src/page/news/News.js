@@ -1,7 +1,8 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { getBarData } from "../../api";
-import { Card, Col, Row, List } from "antd";
+import { Card, Col, Row, List, Button } from "antd";
+import { IconList } from "../../const/IconList";
 const News = () => {
   const [newsList, setNewsList] = useState([]);
   useEffect(() => {
@@ -17,6 +18,20 @@ const News = () => {
     <div style={{ width: "95%", margin: "0 auto" }}>
       <div style={{ width: "100%", float: "left", marginTop: "15px" }}>
         <span>
+          <span>
+            <Button
+              type="text"
+              icon={IconList["/arrowleft"]}
+              onClick={() => {
+                window.history.back();
+              }}
+              style={{
+                fontSize: "16px",
+                width: 64,
+                height: 64,
+              }}
+            />
+          </span>
           <span style={{ fontSize: "25px", fontWeight: "bold", marginRight: "15px" }}>Global Breaking News</span>
           <span style={{ color: "grey" }}>Review News</span>
         </span>

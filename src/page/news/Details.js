@@ -80,7 +80,7 @@ const Details = () => {
         <span style={{ fontSize: "25px", fontWeight: "bold", marginRight: "15px" }}>{previewContent?.title}</span>
         <span>{previewContent?.category?.title}</span>
         <span>
-          <HeartTwoTone twoToneColor="#eb2f96" onClick={() => handleStar()} />,
+          <HeartTwoTone twoToneColor="#eb2f96" onClick={() => handleStar()} />
         </span>
       </span>
       <span>

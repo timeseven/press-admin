@@ -18,7 +18,7 @@ const Login = ({ onLoginSuccess }) => {
         } else {
           message.success("Login Success!");
           localStorage.setItem("token", JSON.stringify(res.data[0]));
-          onLoginSuccess(res.data[0]);
+          await onLoginSuccess(res.data[0]);
           navigate("/");
         }
       } catch (error) {}
@@ -131,6 +131,7 @@ const Login = ({ onLoginSuccess }) => {
                 message: "Please input your Username!",
               },
             ]}
+            initialValue="admin"
           >
             <Input prefix={IconList["/user-manage"]} placeholder="Username" />
           </Form.Item>
@@ -142,6 +143,7 @@ const Login = ({ onLoginSuccess }) => {
                 message: "Please input your Password!",
               },
             ]}
+            initialValue="123456"
           >
             <Input prefix={IconList["/lockOut"]} type="password" placeholder="Password" />
           </Form.Item>
@@ -158,7 +160,7 @@ const Login = ({ onLoginSuccess }) => {
             <Button type="primary" htmlType="submit" className="login-form-button">
               Log in
             </Button>
-            Or <a href="/">register now!</a>
+            Or <a href="/#/news/secret=Even2023">Tourist Access</a>
           </Form.Item>
         </Form>
       </div>

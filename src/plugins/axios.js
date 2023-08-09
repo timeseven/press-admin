@@ -5,7 +5,8 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3001",
+  // baseURL: "http://localhost:3001",
+  baseURL: "https://alabaster-tarry-lavender.glitch.me/",
   timeout: 1000,
 });
 

@@ -77,7 +77,7 @@ const IndexRouter = () => {
     },
     // guest mode view pages
     {
-      path: "/news",
+      path: "/news/secret=Even2023",
       element: <News />,
     },
     {
