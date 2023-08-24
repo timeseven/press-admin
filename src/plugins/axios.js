@@ -6,7 +6,8 @@ import "nprogress/nprogress.css";
 
 const instance = axios.create({
   // baseURL: "http://localhost:3001",
-  baseURL: "https://alabaster-tarry-lavender.glitch.me/",
+  // baseURL: "https://alabaster-tarry-lavender.glitch.me/",
+  baseURL: "https://db-press-admin.vercel.app/",
   timeout: 1000,
 });
 
